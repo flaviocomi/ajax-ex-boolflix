@@ -10,6 +10,30 @@
 </head>
 
 <body>
+
+  <!-- searchbar -->
+  <div class="searchbar">
+    <input type="text" name="" id="input">
+    <button type="submit" id="button">Search</button>
+  </div>
+
+  <!-- contenitore risultati -->
+  <div class="content">
+    <div class="cont-list"></div>
+  </div>
+
+  <!-- film template -->
+  <script id="film-temp" type="text/x-handlebars-template">
+    <div class="box">
+      <p>{{filmTitle}}</p>
+      <p>{{originalTitle}}</p>
+      <p>{{language}}</p>
+      <p>{{vote}}</p>
+    </div>
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 
