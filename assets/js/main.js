@@ -5,6 +5,14 @@ $(document).ready(function () {
     // prendo il valore dell'input
     var inputText = $("#input").val().toLowerCase();
 
+    if (inputText.length == 0) {
+      alert('Ricerca non valida!');
+      return; // esce dalla funzione, non procede con il resto del codice
+    }
+
+    $("#input").val(""); // .val() per gli input
+    $(".cont-list").html(""); // .html per i contenitori (div, span ...)
+
     // chiamata ajax
     $.ajax({
       url: "https://api.themoviedb.org/3/search/movie",
@@ -37,14 +45,13 @@ $(document).ready(function () {
           $(".cont-list").append(html);
 
           var output = $(".cont-list");
-
-          if (originalTitle.includes(inputText)) {
-            output.append(html);
-          }
+          output.append(html);
 
         }
       },
-      error: alert("Ricerca non valida")
+      error: function () {
+        alert("Ricerca non valida");
+      }
     })
 
   })
