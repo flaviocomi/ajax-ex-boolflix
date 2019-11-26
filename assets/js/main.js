@@ -46,9 +46,6 @@ function callFilm() {
         // variabile per i risultati
         var res = apiUrl.results[i];
 
-        // converto il valore del voto da /10 a /5
-        res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
-
         // variabili hb
         var source = $("#film-temp").html();
         var template = Handlebars.compile(source);
