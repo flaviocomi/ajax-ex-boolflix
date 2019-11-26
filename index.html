@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  </link>
   <link rel="stylesheet" href="assets/css/style.css">
   <title>Boolflix</title>
 </head>
@@ -25,10 +27,20 @@
   <!-- film template -->
   <script id="film-temp" type="text/x-handlebars-template">
     <div class="box">
-      <p>{{filmTitle}}</p>
-      <p>{{originalTitle}}</p>
-      <p>{{language}}</p>
-      <p>{{vote}}</p>
+      <p>Titolo: {{filmTitle}}</p>
+      <p>Titolo originale: {{originalTitle}}</p>
+      <p>Lingua: <span>{{{flag}}}</span></p>
+      <p>Voto: <span>{{{stars}}}</span></p>
+    </div>
+  </script>
+
+  <!-- serie template -->
+  <script id="serie-temp" type="text/x-handlebars-template">
+    <div class="box">
+      <p>Titolo: {{serieTitle}}</p>
+      <p>Titolo originale: {{originalTitle}}</p>
+      <p>Lingua: <span>{{{flag}}}</span></p>
+      <p>Voto: <span>{{{stars}}}</span></p>
     </div>
   </script>
 
