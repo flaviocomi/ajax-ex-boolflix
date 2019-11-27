@@ -46,19 +46,20 @@ function callFilm() {
         // variabile per i risultati
         var res = apiUrl.results[i];
 
+        // converto il valore del voto da /10 a /5
+        res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
+
         // variabili hb
         var source = $("#film-temp").html();
         var template = Handlebars.compile(source);
         var context = {
+          poster: '<img src="https://image.tmdb.org/t/p/w185' + res.poster_path + '">',
           filmTitle: res.title,
           originalTitle: res.original_title,
           flag: insFlag(res.original_language),
           stars: insStars(res.vote_average - 1)
         };
         var html = template(context);
-
-        // converto il valore del voto da /10 a /5
-        res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
 
         // aggiungo il contenuto in pagina
         $(".cont-list").append(html);
@@ -102,6 +103,9 @@ function callSerie() {
         // variabile per i risultati
         var res = apiUrl.results[i];
 
+        // converto il valore del voto da /10 a /5
+        res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
+
         // variabili hb
         var source = $("#serie-temp").html();
         var template = Handlebars.compile(source);
@@ -112,9 +116,6 @@ function callSerie() {
           stars: insStars(res.vote_average - 1)
         };
         var html = template(context);
-
-        // converto il valore del voto da /10 a /5
-        res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
 
         // aggiungo il contenuto in pagina
         $(".cont-list2").append(html);
@@ -133,23 +134,20 @@ function callSerie() {
 
 // funzione per inserire le bandiere al posto della lingua
 function insFlag(lang) {
-  var flag;
-  if (lang == "it") {
-    flag = "<img src='assets/img/it.png'";
-  } else if (lang == "de") {
-    flag = "<img src='assets/img/de.png'";
-  } else if (lang == "es") {
-    flag = "<img src='assets/img/es.png'";
-  } else if (lang == "fr") {
-    flag = "<img src='assets/img/fr.png'";
-  } else if (lang == "ru") {
-    flag = "<img src='assets/img/ru.png'";
-  } else if (lang == "en") {
-    flag = "<img src='assets/img/usa.png'";
-  } else {
-    flag = "<img src='assets/img/world.png'";
+
+  var flag = [
+    "it",
+    "de",
+    "es",
+    "fr",
+    "ru",
+    "en"
+  ];
+
+  if (flag.includes(lang)) {
+    return "<img src='assets/img/" + lang + ".png'>";
   }
-  return flag
+  return "";
 };
 
 

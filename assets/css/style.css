@@ -1,8 +1,8 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 .searchbar {
   text-align: center;
@@ -16,9 +16,9 @@
   margin: 20px 0;
   float: left;
   text-align: center;
-  width: 25vw;
+  /* width: 25vw; */
 }
 
-img {
+.flag img {
   width: 15px;
 }
