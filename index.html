@@ -28,6 +28,7 @@
   <script id="film-temp" type="text/x-handlebars-template">
     <div class="box">
       <p>{{{poster}}}</p>
+      <p>{{type}}</p>
       <p>Titolo: {{filmTitle}}</p>
       <p>Titolo originale: {{originalTitle}}</p>
       <p>Lingua: <span class="flag">{{{flag}}}</span></p>
@@ -39,9 +40,10 @@
   <script id="serie-temp" type="text/x-handlebars-template">
     <div class="box">
       <p>{{{poster}}}</p>
+      <p>{{type}}</p>
       <p>Titolo: {{serieTitle}}</p>
       <p>Titolo originale: {{originalTitle}}</p>
-      <p>Lingua: <span>{{{flag}}}</span></p>
+      <p>Lingua: <span class="flag">{{{flag}}}</span></p>
       <p>Voto: <span>{{{stars}}}</span></p>
     </div>
   </script>

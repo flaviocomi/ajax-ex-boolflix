@@ -54,6 +54,7 @@ function callFilm() {
         var template = Handlebars.compile(source);
         var context = {
           poster: '<img src="https://image.tmdb.org/t/p/w185' + res.poster_path + '">',
+          type: "film",
           filmTitle: res.title,
           originalTitle: res.original_title,
           flag: insFlag(res.original_language),
@@ -110,6 +111,8 @@ function callSerie() {
         var source = $("#serie-temp").html();
         var template = Handlebars.compile(source);
         var context = {
+          poster: '<img src="https://image.tmdb.org/t/p/w185' + res.poster_path + '">',
+          type: "serie",
           serieTitle: res.name,
           originalTitle: res.original_name,
           flag: insFlag(res.original_language),
@@ -118,7 +121,7 @@ function callSerie() {
         var html = template(context);
 
         // aggiungo il contenuto in pagina
-        $(".cont-list2").append(html);
+        $(".cont-list").append(html);
 
       }
     },
