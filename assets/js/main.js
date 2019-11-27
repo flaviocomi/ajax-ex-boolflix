@@ -41,6 +41,9 @@ function callFilm() {
     },
     success: function (apiUrl) {
 
+      var source = $("#film-temp").html();
+      var template = Handlebars.compile(source);
+
       for (var i = 0; i < apiUrl.results.length; i++) {
 
         // variabile per i risultati
@@ -49,11 +52,8 @@ function callFilm() {
         // converto il valore del voto da /10 a /5
         res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
 
-        // variabili hb
-        var source = $("#film-temp").html();
-        var template = Handlebars.compile(source);
         var context = {
-          poster: '<img src="https://image.tmdb.org/t/p/w185' + res.poster_path + '">',
+          poster: '<img src="https://image.tmdb.org/t/p/' + 'w185' + res.poster_path + '">',
           type: "film",
           filmTitle: res.title,
           originalTitle: res.original_title,
@@ -99,6 +99,9 @@ function callSerie() {
     },
     success: function (apiUrl) {
 
+      var source = $("#serie-temp").html();
+      var template = Handlebars.compile(source);
+
       for (var i = 0; i < apiUrl.results.length; i++) {
 
         // variabile per i risultati
@@ -107,11 +110,8 @@ function callSerie() {
         // converto il valore del voto da /10 a /5
         res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
 
-        // variabili hb
-        var source = $("#serie-temp").html();
-        var template = Handlebars.compile(source);
         var context = {
-          poster: '<img src="https://image.tmdb.org/t/p/w185' + res.poster_path + '">',
+          poster: '<img src="https://image.tmdb.org/t/p/' + 'w185' + res.poster_path + '">',
           type: "serie",
           serieTitle: res.name,
           originalTitle: res.original_name,
