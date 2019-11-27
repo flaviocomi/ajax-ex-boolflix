@@ -6,6 +6,7 @@ $(document).ready(function () {
     // ripulisce il contenuto
     $(".cont-list").html(""); // .html("") per i contenitori (div, span ...)
 
+    // chiamate film e serie
     callFilm();
     callSerie();
 
@@ -15,6 +16,10 @@ $(document).ready(function () {
 
 
 
+
+
+
+// funzione di chiamata film
 function callFilm() {
 
   // prendo il valore dell'input
@@ -24,14 +29,19 @@ function callFilm() {
   $.ajax({
     url: "https://api.themoviedb.org/3/search/movie",
     method: "GET",
+
     data: {
       api_key: "27fe9c05fc3ad1a6ce2b0f9a54f8a026",
       query: inputText,
       language: "it-IT"
     },
+
     success: function (apiUrl) {
 
+      // variabile per i risultati
       var list = apiUrl.results;
+
+      // inserisce i dati in pagina
       insData("film", list);
 
       // se l'input è vuoto dà un errore
@@ -44,13 +54,18 @@ function callFilm() {
       }
 
     },
+
     error: function () {
       alert("Ricerca non valida");
     }
+
   });
 
 }
 
+
+
+// funzione di chiamata serie
 function callSerie() {
 
   // prendo il valore dell'input
@@ -60,14 +75,19 @@ function callSerie() {
   $.ajax({
     url: "https://api.themoviedb.org/3/search/tv",
     method: "GET",
+
     data: {
       api_key: "27fe9c05fc3ad1a6ce2b0f9a54f8a026",
       query: inputText,
       language: "it-IT"
     },
+
     success: function (apiUrl) {
 
+      // variabile per i risultati
       var list = apiUrl.results;
+
+      // inserisce i dati in pagina
       insData("serie", list);
 
       // se l'input è vuoto dà un errore
@@ -80,9 +100,11 @@ function callSerie() {
       }
 
     },
+
     error: function () {
       alert("Ricerca non valida");
     }
+
   })
 
 }
@@ -111,8 +133,8 @@ function insData(type, list) {
       origTitle = res.original_name;
     }
 
-    // converto il valore del voto da /10 a /5
-    res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
+    // converte il valore del voto da /10 a /5
+    res.vote_average = Math.floor(res.vote_average / 2);
 
     // riempie il template
     var context = {
@@ -150,7 +172,9 @@ function insFlag(lang) {
   if (flag.includes(lang)) {
     return "<img src='assets/img/" + lang + ".png'>";
   }
+
   return "";
+
 };
 
 
@@ -159,7 +183,9 @@ function insFlag(lang) {
 
 // funzione per inserire le stelle al posto del voto
 function insStars(vote) {
+
   var stars = "";
+
   for (var i = 0; i < 5; i++) {
     if (i <= vote) {
       stars += "<i class='fas fa-star'></i>";
@@ -167,5 +193,7 @@ function insStars(vote) {
       stars += "<i class='far fa-star'></i>";
     }
   }
+
   return stars
+
 };

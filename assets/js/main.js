@@ -3,7 +3,7 @@ $(document).ready(function () {
   // al click del bottone
   $("#button").click(function () {
 
-    // chiamata film e serie
+    // chiamate film e serie
     callFilm();
     callSerie();
 
@@ -23,24 +23,29 @@ $(document).ready(function () {
 // funzione per richiamare i film
 function callFilm() {
 
-  // prendo il valore dell'input
+  // prende il valore dell'input
   var inputText = $("#input").val().toLowerCase();
 
+  // se l'input è vuoto dà un errore
   if (inputText.length == 0) {
     alert('Ricerca non valida!');
     return; // esce dalla funzione, non procede con il resto del codice
   }
 
+  // chiamata ajax
   $.ajax({
     url: "https://api.themoviedb.org/3/search/movie",
     method: "GET",
+
     data: {
       api_key: "27fe9c05fc3ad1a6ce2b0f9a54f8a026",
       query: inputText,
       language: "it - IT"
     },
+
     success: function (apiUrl) {
 
+      // imposta il template
       var source = $("#film-temp").html();
       var template = Handlebars.compile(source);
 
@@ -50,8 +55,9 @@ function callFilm() {
         var res = apiUrl.results[i];
 
         // converto il valore del voto da /10 a /5
-        res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
+        res.vote_average = Math.floor(res.vote_average / 2);
 
+        // immette i dati nel template
         var context = {
           poster: '<img src="https://image.tmdb.org/t/p/' + 'w185' + res.poster_path + '">',
           type: "film",
@@ -62,14 +68,17 @@ function callFilm() {
         };
         var html = template(context);
 
-        // aggiungo il contenuto in pagina
+        // aggiunge il contenuto in pagina
         $(".cont-list").append(html);
 
       }
+
     },
+
     error: function () {
       alert("Ricerca non valida");
     }
+
   });
 
 };
@@ -92,13 +101,16 @@ function callSerie() {
   $.ajax({
     url: "https://api.themoviedb.org/3/search/tv",
     method: "GET",
+
     data: {
       api_key: "27fe9c05fc3ad1a6ce2b0f9a54f8a026",
       query: inputText,
       language: "it - IT"
     },
+
     success: function (apiUrl) {
 
+      // imposta il template
       var source = $("#serie-temp").html();
       var template = Handlebars.compile(source);
 
@@ -108,8 +120,9 @@ function callSerie() {
         var res = apiUrl.results[i];
 
         // converto il valore del voto da /10 a /5
-        res.vote_average = parseInt((parseInt(res.vote_average)) / 2);
+        res.vote_average = Math.floor(res.vote_average / 2);
 
+        // immette i dati nel template
         var context = {
           poster: '<img src="https://image.tmdb.org/t/p/' + 'w185' + res.poster_path + '">',
           type: "serie",
@@ -124,10 +137,13 @@ function callSerie() {
         $(".cont-list").append(html);
 
       }
+
     },
+
     error: function () {
       alert("Ricerca non valida");
     }
+
   })
 
 }
@@ -150,7 +166,9 @@ function insFlag(lang) {
   if (flag.includes(lang)) {
     return "<img src='assets/img/" + lang + ".png'>";
   }
+
   return "";
+
 };
 
 
@@ -159,7 +177,9 @@ function insFlag(lang) {
 
 // funzione per inserire le stelle al posto del voto
 function insStars(vote) {
+
   var stars = "";
+
   for (var i = 0; i < 5; i++) {
     if (i <= vote) {
       stars += "<i class='fas fa-star'></i>";
@@ -167,5 +187,7 @@ function insStars(vote) {
       stars += "<i class='far fa-star'></i>";
     }
   }
+
   return stars
+
 };
