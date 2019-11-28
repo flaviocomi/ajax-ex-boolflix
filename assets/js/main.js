@@ -3,15 +3,23 @@ $(document).ready(function () {
   // al click del bottone
   $("#button").click(function () {
 
+    // ripulisce il contenuto
+    $(".cont-list").html(""); // .html("") per i contenitori (div, span ...)
+
+    // mostra i no mi dei container
+    $(".content").css("height", "auto");
+
+    //mostra i pulsanti
+    $(".btn").show();
+
+    // aggiunge il nome ai container
+    $(".title").show();
+
     // chiamate film e serie
     callFilm();
     callSerie();
 
-    // ripulisce l'input
-    $("#input").val(""); // .val("") per gli input
-
-    // ripulisce il contenuto
-    $(".cont-list").html(""); // .html("") per i contenitori (div, span ...)
+    // controls(frameWidth, scollWidth);
 
   })
 
@@ -20,19 +28,15 @@ $(document).ready(function () {
 
 
 
-// funzione per richiamare i film
+
+
+// funzione di chiamata film
 function callFilm() {
 
-  // prende il valore dell'input
+  // prendo il valore dell'input
   var inputText = $("#input").val().toLowerCase();
 
-  // se l'input è vuoto dà un errore
-  if (inputText.length == 0) {
-    alert('Ricerca non valida!');
-    return; // esce dalla funzione, non procede con il resto del codice
-  }
-
-  // chiamata ajax
+  // chiamata ajax film
   $.ajax({
     url: "https://api.themoviedb.org/3/search/movie",
     method: "GET",
@@ -40,37 +44,24 @@ function callFilm() {
     data: {
       api_key: "27fe9c05fc3ad1a6ce2b0f9a54f8a026",
       query: inputText,
-      language: "it - IT"
+      language: "it-IT"
     },
 
     success: function (apiUrl) {
 
-      // imposta il template
-      var source = $("#film-temp").html();
-      var template = Handlebars.compile(source);
+      // variabile per i risultati
+      var list = apiUrl.results;
 
-      for (var i = 0; i < apiUrl.results.length; i++) {
+      // inserisce i dati in pagina
+      insData("film", list);
 
-        // variabile per i risultati
-        var res = apiUrl.results[i];
-
-        // converto il valore del voto da /10 a /5
-        res.vote_average = Math.floor(res.vote_average / 2);
-
-        // immette i dati nel template
-        var context = {
-          poster: '<img src="https://image.tmdb.org/t/p/' + 'w185' + res.poster_path + '">',
-          type: "film",
-          filmTitle: res.title,
-          originalTitle: res.original_title,
-          flag: insFlag(res.original_language),
-          stars: insStars(res.vote_average - 1)
-        };
-        var html = template(context);
-
-        // aggiunge il contenuto in pagina
-        $(".cont-list").append(html);
-
+      // se l'input è vuoto dà un errore
+      if (inputText.length == 0) {
+        alert('Ricerca non valida!');
+        return; // esce dalla funzione, non procede con il resto del codice
+      } else {
+        // ripulisce l'input
+        $("#input").val(""); // .val("") per gli input
       }
 
     },
@@ -81,23 +72,17 @@ function callFilm() {
 
   });
 
-};
+}
 
 
 
-
-
-// funzione per richiamare le serie
+// funzione di chiamata serie
 function callSerie() {
 
   // prendo il valore dell'input
   var inputText = $("#input").val().toLowerCase();
 
-  if (inputText.length == 0) {
-    alert('Ricerca non valida!');
-    return; // esce dalla funzione, non procede con il resto del codice
-  }
-
+  // chiamata ajax serie
   $.ajax({
     url: "https://api.themoviedb.org/3/search/tv",
     method: "GET",
@@ -105,37 +90,24 @@ function callSerie() {
     data: {
       api_key: "27fe9c05fc3ad1a6ce2b0f9a54f8a026",
       query: inputText,
-      language: "it - IT"
+      language: "it-IT"
     },
 
     success: function (apiUrl) {
 
-      // imposta il template
-      var source = $("#serie-temp").html();
-      var template = Handlebars.compile(source);
+      // variabile per i risultati
+      var list = apiUrl.results;
 
-      for (var i = 0; i < apiUrl.results.length; i++) {
+      // inserisce i dati in pagina
+      insData("serie", list);
 
-        // variabile per i risultati
-        var res = apiUrl.results[i];
-
-        // converto il valore del voto da /10 a /5
-        res.vote_average = Math.floor(res.vote_average / 2);
-
-        // immette i dati nel template
-        var context = {
-          poster: '<img src="https://image.tmdb.org/t/p/' + 'w185' + res.poster_path + '">',
-          type: "serie",
-          serieTitle: res.name,
-          originalTitle: res.original_name,
-          flag: insFlag(res.original_language),
-          stars: insStars(res.vote_average - 1)
-        };
-        var html = template(context);
-
-        // aggiungo il contenuto in pagina
-        $(".cont-list").append(html);
-
+      // se l'input è vuoto dà un errore
+      if (inputText.length == 0) {
+        alert('Ricerca non valida!');
+        return; // esce dalla funzione, non procede con il resto del codice
+      } else {
+        // ripulisce l'input
+        $("#input").val(""); // .val("") per gli input
       }
 
     },
@@ -145,6 +117,62 @@ function callSerie() {
     }
 
   })
+
+}
+
+
+
+// funzione che inserisce i dati in pagina
+function insData(type, list) {
+
+  // imposta il template
+  var source = $("#temp").html();
+  var template = Handlebars.compile(source);
+
+  for (var i = 0; i < list.length; i++) {
+
+    // variabile per i risultati
+    var res = list[i];
+
+    // differenzia film e serie
+    var title, origTitle;
+    if (type == "film") {
+      title = res.title;
+      origTitle = res.original_title;
+    } else {
+      title = res.name;
+      origTitle = res.original_name;
+    }
+
+    // converte il valore del voto da /10 a /5
+    res.vote_average = Math.floor(res.vote_average / 2);
+
+    var poster = "";
+    if (res.poster_path) {
+      poster = '<img src="https://image.tmdb.org/t/p/' + 'w342' + res.poster_path + '">'
+    } else {
+      poster = '<img src="assets/img/not.jpg">'
+    }
+
+    // riempie il template
+    var context = {
+      poster: poster,
+      title: title,
+      originalTitle: origTitle,
+      flag: insFlag(res.original_language),
+      stars: insStars(res.vote_average - 1),
+      overview: res.overview
+    };
+    var html = template(context);
+
+    // aggiungo il contenuto in pagina
+    if (type == "film") {
+      $(".film-list").append(html);
+    } else {
+      $(".serie-list").append(html);
+    }
+
+  }
 
 }
 
@@ -191,3 +219,43 @@ function insStars(vote) {
   return stars
 
 };
+
+
+
+// // slider
+// var currentSliderCount = 0;
+// var videoCount = $(".list").children().length;
+// var showCount = 3;
+// var sliderCount = videoCount / showCount;
+// var scollWidth = 0;
+// var win = $(window);
+// var windowWidth = win.width();
+// var frameWidth = win.width() - 80;
+
+// function controls(frameWidth, scollWidth) {
+//   var prev = $(".prev");
+//   var next = $(".next");
+
+//   next.on("click", function () {
+//     scollWidth = scollWidth + frameWidth;
+//     $('.list').animate({
+//       left: -scollWidth
+//     }, 300, function () {
+//       if (currentSliderCount >= sliderCount - 1) {
+//         $(".list").css("left", 0);
+//         currentSliderCount = 0;
+//         scollWidth = 0;
+//       } else {
+//         currentSliderCount++;
+//       }
+//     });
+//   });
+//   prev.on("click", function () {
+//     scollWidth = scollWidth - frameWidth;
+//     $('.list').animate({
+//       left: +scollWidth
+//     }, 300, function () {
+//       currentSliderCount--;
+//     });
+//   });
+// };

@@ -6,47 +6,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-  </link>
   <link rel="stylesheet" href="assets/css/style.css">
-  <title>Boolflix</title>
+  <title>2Boolflix</title>
 </head>
 
 <body>
 
-  <!-- searchbar -->
-  <div class="searchbar">
-    <input type="text" id="input">
-    <button type="submit" id="button">Search</button>
-  </div>
+  <!-- header -->
+  <header>
+
+    <!-- logo -->
+    <div class="logo">
+      <h1>Boolflix</h1>
+    </div>
+
+    <!-- searchbar -->
+    <div class="searchbar">
+      <input type="text" id="input">
+      <button type="submit" id="button"><i class="fas fa-search"></i></button>
+    </div>
+
+  </header>
+
+
 
   <!-- contenitore risultati -->
   <div class="content">
-    <div class="cont-list"></div>
+
+    <!-- container film -->
+    <div class="container">
+
+      <div class="title">
+        <h2>Film</h2>
+      </div>
+
+      <div class="cont film-cont">
+
+        <div class="btn btn-left prev"><i class="fas fa-chevron-left"></i></div>
+
+        <div class="list film-list"></div>
+
+        <div class="btn btn-right next"><i class="fas fa-chevron-right"></i></div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- container serie -->
+    <div class="container">
+
+      <div class="title">
+        <h2>Serie TV</h2>
+      </div>
+
+      <div class="cont serie-cont">
+
+        <div class="btn btn-left"><i class="fas fa-chevron-left"></i></div>
+
+        <div class="list serie-list"></div>
+
+        <div class="btn btn-right"><i class="fas fa-chevron-right"></i></div>
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- film template -->
-  <script id="film-temp" type="text/x-handlebars-template">
+
+
+
+
+  <!-- template -->
+  <script id="temp" type="text/x-handlebars-template">
+
     <div class="box">
-      <p>{{{poster}}}</p>
-      <p>{{type}}</p>
-      <p>Titolo: {{filmTitle}}</p>
-      <p>Titolo originale: {{originalTitle}}</p>
-      <p>Lingua: <span class="flag">{{{flag}}}</span></p>
-      <p>Voto: <span>{{{stars}}}</span></p>
+
+      <div class="poster">{{{poster}}}</div>
+
+      <div class="info">
+        <p><span class="tag">Titolo:</span>{{title}}</p>
+        <p><span class="tag">Titolo originale: </span>{{originalTitle}}</p>
+        <p><span class="tag">Lingua: </span><span class="flag">{{{flag}}}</span></p>
+        <p><span class="tag">Voto: </span><span>{{{stars}}}</span></p>
+        <p><span class="tag">Trama: </span><span>{{overview}}</span></p>
+      </div>
+
     </div>
+
   </script>
 
-  <!-- serie template -->
-  <script id="serie-temp" type="text/x-handlebars-template">
-    <div class="box">
-      <p>{{{poster}}}</p>
-      <p>{{type}}</p>
-      <p>Titolo: {{serieTitle}}</p>
-      <p>Titolo originale: {{originalTitle}}</p>
-      <p>Lingua: <span class="flag">{{{flag}}}</span></p>
-      <p>Voto: <span>{{{stars}}}</span></p>
-    </div>
-  </script>
+
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

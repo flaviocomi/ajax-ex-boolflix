@@ -1,24 +1,156 @@
-/* * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-} */
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/*  */
+/* HEADER */
+/*  */
+
+header {
+  height: 80px;
+  background-color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+h1 {
+  font-family: "bebas-neue";
+  color: red;
+}
 
 .searchbar {
-  text-align: center;
+  display: flex;
 }
 
 #input {
-  margin: 50px 0;
+  height: 30px;
+  padding: 5px;
+  border: 1px solid rgb(133, 131, 131);
+  background-color: #000;
+  color: #fff;
+}
+
+#input:focus {
+  background-color: #000;
+  color: #fff;
+}
+
+#button {
+  width: 40px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+}
+
+#button:hover {
+  cursor: pointer;
+}
+
+.fa-search {
+  font-size: 15px;
+}
+
+
+/*  */
+/* CONTENT */
+/*  */
+
+.content {
+  height: calc(100vh - 80px);
+  margin-top: 80px;
+  background-color: #141414;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.container h2 {
+  text-align: center;
+}
+
+.title {
+  display: none;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.cont {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  height: 100%;
+  width: 5%;
+  font-size: 40px;
+  color: rgb(65, 69, 75);
+  text-align: center;
+  display: none;
+}
+
+.btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.list {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  overflow-x: auto;
 }
 
 .box {
-  margin: 20px 0;
+  margin: 0 20px;
   float: left;
-  text-align: center;
-  /* width: 25vw; */
+  position: relative;
+}
+
+.box:hover .poster {
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.box:hover .info {
+  display: block;
+}
+
+.info {
+  width: 100%;
+  padding: 10px;
+  position: absolute;
+  bottom: 40px;
+  display: none;
+}
+
+p {
+  color: #fff;
+}
+
+.tag {
+  font-weight: bold;
 }
 
 .flag img {
   width: 15px;
+}
+
+@font-face {
+  font-family: "bebas-neue";
+  src: url("../bebas-neue/BebasNeue.otf");
 }
